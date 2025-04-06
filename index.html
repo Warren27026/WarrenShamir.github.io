@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Warren Betchem</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D5CDE',
+                        secondary: '#383854',
+                        accent: '#5D5CDE',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .section-transition {
+            transition: all 0.5s ease;
+        }
+        
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .dark .project-card:hover {
+            box-shadow: 0 10px 25px -5px rgba(255, 255, 255, 0.1), 0 10px 10px -5px rgba(255, 255, 255, 0.04);
+        }
+        
+        .menu-item {
+            position: relative;
+        }
+        
+        .menu-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #5D5CDE;
+            transition: width 0.3s ease;
+        }
+        
+        .menu-item:hover::after, .menu-item.active::after {
+            width: 100%;
+        }
+        
+        .dark .menu-item::after {
+            background-color: #8584e4;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes rotateIn {
+            from { transform: rotate(-10deg); opacity: 0; }
+            to { transform: rotate(0); opacity: 1; }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        .animate-slide-left {
+            animation: slideInLeft 0.8s ease forwards;
+        }
+        
+        .animate-slide-right {
+            animation: slideInRight 0.8s ease forwards;
+        }
+        
+        .animate-bounce {
+            animation: bounce 2s infinite;
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        .animate-rotate {
+            animation: rotateIn 0.6s ease forwards;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+        
+        .comp-tech {
+            transition: all 0.3s ease;
+        }
+        
+        .comp-tech:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .dark .comp-tech:hover {
+            box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.1), 0 4px 6px -2px rgba(255, 255, 255, 0.05);
+        }
+        
+        .filtre-projet {
+            transition: all 0.3s ease;
+        }
+        
+        .filtre-projet:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white dark:bg-gray-900 shadow-md z-50 transition-colors duration-300">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center">
+                <span class="text-xl font-bold text-primary">MonPortfolio</span>
+            </div>
+            
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#accueil" class="menu-item py-2">Accueil</a>
+                <a href="#apropos" class="menu-item py-2">À propos</a>
+                <a href="#competences" class="menu-item py-2">Compétences</a>
+                <a href="#projets" class="menu-item py-2">Projets</a>
+                <a href="#formation" class="menu-item py-2">Formation</a>
+                <a href="#contact" class="menu-item py-2">Contact</a>
+                <button id="modeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
+                </button>
+            </div>
+            
+            <div class="md:hidden flex items-center">
+                <button id="modeToggleMobile" class="p-2 mr-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
+                </button>
+                <button id="menuToggle" class="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Menu mobile -->
+        <div id="mobileMenu" class="hidden bg-white dark:bg-gray-800 md:hidden w-full transition-all duration-300">
+            <div class="container mx-auto px-4 py-2 flex flex-col">
+                <a href="#accueil" class="py-3 border-b border-gray-200 dark:border-gray-700">Accueil</a>
+                <a href="#apropos" class="py-3 border-b border-gray-200 dark:border-gray-700">À propos</a>
+                <a href="#competences" class="py-3 border-b border-gray-200 dark:border-gray-700">Compétences</a>
+                <a href="#projets" class="py-3 border-b border-gray-200 dark:border-gray-700">Projets</a>
+                <a href="#formation" class="py-3 border-b border-gray-200 dark:border-gray-700">Formation</a>
+                <a href="#contact" class="py-3">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Section d'accueil -->
+    <section id="accueil" class="min-h-screen flex items-center justify-center pt-20 section-transition">
+        <div class="container mx-auto px-4 py-20 flex flex-col-reverse md:flex-row items-center gap-8">
+            <div class="md:w-1/2 animate-slide-left" style="animation-delay: 0.2s;">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Bonjour, je suis <span class="text-primary">Warren Shamir</span></h1>
+                <h2 class="text-2xl md:text-3xl text-gray-600 dark:text-gray-400 mb-6">Étudiant en Informatique à l'ENSIM</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">Passionné par la data&IA, le developpement et  les nouvelles technologies</p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#contact" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-opacity-90 hover:scale-105 transition-all">Me contacter</a>
+                    <a href="#projets" class="px-6 py-3 border border-primary text-primary dark:text-primary rounded-lg hover:bg-primary hover:bg-opacity-10 hover:scale-105 transition-all">Voir mes projets</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center animate-slide-right" style="animation-delay: 0.4s;">
+                <div class="w-48 h-48 md:w-64 md:h-64 rounded-full bg-primary bg-opacity-20 flex items-center justify-center animate-pulse">
+                    <i class="fas fa-user-graduate text-7xl text-primary"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section à propos -->
+    <section id="apropos" class="py-20 bg-gray-50 dark:bg-gray-800 section-transition">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12"><span class="border-b-2 border-primary pb-2">À Propos</span></h2>
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="md:w-1/2">
+                    <div class="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-6">
+                        <h3 class="text-xl font-semibold mb-4">Qui suis-je?</h3>
+                        <p class="mb-4">Je suis un étudiant passionné d'informatique à l'École Nationale Supérieure d'Ingénieurs du Mans (ENSIM). Je me spécialise dans [votre spécialité] et j'ai un intérêt particulier pour [vos centres d'intérêt en informatique].</p>
+                        <p class="mb-4">Mon parcours académique m'a permis de développer de solides compétences techniques ainsi qu'une bonne capacité d'adaptation face aux défis technologiques actuels.</p>
+                        <p>Je suis constamment à la recherche de nouvelles connaissances et d'opportunités pour mettre en pratique mes compétences dans des projets innovants.</p>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-6 flex flex-col items-center text-center">
+                            <i class="fas fa-graduation-cap text-4xl text-primary mb-4"></i>
+                            <h3 class="text-lg font-semibold mb-2">Formation</h3>
+                            <p>Cycle ingénieur en informatique à l'ENSIM</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-6 flex flex-col items-center text-center">
+                            <i class="fas fa-laptop-code text-4xl text-primary mb-4"></i>
+                            <h3 class="text-lg font-semibold mb-2">Développement</h3>
+                            <p>Passionné par la création de solutions logicielles</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-6 flex flex-col items-center text-center">
+                            <i class="fas fa-brain text-4xl text-primary mb-4"></i>
+                            <h3 class="text-lg font-semibold mb-2">Innovation</h3>
+                            <p>Intérêt pour les technologies émergentes</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-6 flex flex-col items-center text-center">
+                            <i class="fas fa-users text-4xl text-primary mb-4"></i>
+                            <h3 class="text-lg font-semibold mb-2">Collaboration</h3>
+                            <p>Expérience en travail d'équipe sur des projets</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section compétences -->
+    <section id="competences" class="py-20 section-transition">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12"><span class="border-b-2 border-primary pb-2">Compétences</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                    <h3 class="text-xl font-semibold mb-6">Compétences Techniques</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="comp-tech bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex items-center gap-4 transform hover:scale-105 transition-all duration-300">
+                            <div class="bg-primary bg-opacity-20 p-3 rounded-full">
+                                <i class="fab fa-java text-2xl text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Java et C</h4>
+                                <!--div class="flex mt-1">
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                </div-->
+                            </div>
+                        </div>
+                        
+                        <div class="comp-tech bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex items-center gap-4 transform hover:scale-105 transition-all duration-300">
+                            <div class="bg-primary bg-opacity-20 p-3 rounded-full">
+                                <i class="fab fa-html5 text-2xl text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">HTML/CSS</h4>
+                                <!--div class="flex mt-1">
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star-half-alt text-primary"></i>
+                                </div-->
+                            </div>
+                        </div>
+                        
+                        <div class="comp-tech bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex items-center gap-4 transform hover:scale-105 transition-all duration-300">
+                            <div class="bg-primary bg-opacity-20 p-3 rounded-full">
+                                <i class="fab fa-js-square text-2xl text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">JavaScript</h4>
+                                <!--div class="flex mt-1">
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="far fa-star text-primary"></i>
+                                </div-->
+                            </div>
+                        </div>
+                        
+                        <div class="comp-tech bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex items-center gap-4 transform hover:scale-105 transition-all duration-300">
+                            <div class="bg-primary bg-opacity-20 p-3 rounded-full">
+                                <i class="fab fa-python text-2xl text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Python</h4>
+                                <!--div class="flex mt-1">
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star-half-alt text-primary"></i>
+                                    <i class="far fa-star text-primary"></i>
+                                </div-->
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="comp-tech bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex items-center gap-4 transform hover:scale-105 transition-all duration-300">
+                            <div class="bg-primary bg-opacity-20 p-3 rounded-full">
+                                <i class="fas fa-database text-2xl text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">SQL</h4>
+                                <!--div class="flex mt-1">
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="far fa-star text-primary"></i>
+                                    <i class="far fa-star text-primary"></i>
+                                </div-->
+                            </div>
+                        </div>
+                        
+                        <div class="comp-tech bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex items-center gap-4 transform hover:scale-105 transition-all duration-300">
+                            <div class="bg-primary bg-opacity-20 p-3 rounded-full">
+                                <i class="fas fa-chart-pie text-2xl text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Data Analysis</h4>
+                                <!--div class="flex mt-1">
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star-half-alt text-primary"></i>
+                                    <i class="far fa-star text-primary"></i>
+                                </div-->
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                    <h3 class="text-xl font-semibold mb-6">Compétences Transversales</h3>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex items-center p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
+                            <i class="fas fa-users text-primary mr-3"></i>
+                            <span>Travail d'équipe</span>
+                        </div>
+                        
+                        <div class="flex items-center p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
+                            <i class="fas fa-tasks text-primary mr-3"></i>
+                            <span>Gestion de projet</span>
+                        </div>
+                        
+                        <div class="flex items-center p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
+                            <i class="fas fa-comments text-primary mr-3"></i>
+                            <span>Communication</span>
+                        </div>
+                        
+                        <div class="flex items-center p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
+                            <i class="fas fa-lightbulb text-primary mr-3"></i>
+                            <span>Résolution de problèmes</span>
+                        </div>
+                        
+                        <div class="flex items-center p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
+                            <i class="fas fa-clock text-primary mr-3"></i>
+                            <span>Gestion du temps</span>
+                        </div>
+                        
+                        <div class="flex items-center p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
+                            <i class="fas fa-book text-primary mr-3"></i>
+                            <span>Autonomie</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 md:col-span-2">
+                    <h3 class="text-xl font-semibold mb-6">Outils & Technologies</h3>
+                    
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center"><i class="fab fa-git-alt mr-2 text-primary"></i>Git</span>
+                        <span class="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center"><i class="fas fa-code mr-2 text-primary"></i>VS Code</span>
+                        <!--span class="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center"><i class="fab fa-java mr-2 text-primary"></i>IntelliJ IDEA</span>
+                        <span class="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center"><i class="fab fa-docker mr-2 text-primary"></i>Docker</span>
+                        <span class="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center"><i class="fab fa-react mr-2 text-primary"></i>React</span>
+                        <span class="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center"><i class="fab fa-node-js mr-2 text-primary"></i>Node.js</span-->
+                        <span class="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center"><i class="fas fa-database mr-2 text-primary"></i>MySQL</span>
+                        <!--span class="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center"><i class="fas fa-leaf mr-2 text-primary"></i>MongoDB</span-->
+                        <span class="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center"><i class="fab fa-linux mr-2 text-primary"></i>Linux</span>
+                        <span class="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center"><i class="fas fa-chart-bar mr-2 text-primary"></i>Power BI</span>
+                        <span class="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center"><i class="fas fa-file-excel mr-2 text-primary"></i>Excel</span>
+                        <span class="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center"><i class="fas fa-terminal mr-2 text-primary"></i>Spyder</span>
+                        <span class="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center"><i class="fab fa-python mr-2 text-primary"></i>Jupyter Notebook</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- Section projets -->
+<section id="projets" class="py-20 bg-gray-50 dark:bg-gray-800 section-transition">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12"><span class="border-b-2 border-primary pb-2">Projets</span></h2>
+        
+        <div class="flex justify-center mb-8">
+            <div class="flex flex-wrap gap-3 justify-center">
+                <button class="filtre-projet px-4 py-2 rounded-full bg-primary text-white" data-categorie="tous">Tous</button>
+                <button class="filtre-projet px-4 py-2 rounded-full bg-white dark:bg-gray-700 text-gray-700 dark:text-white" data-categorie="web">Web</button>
+                <button class="filtre-projet px-4 py-2 rounded-full bg-white dark:bg-gray-700 text-gray-700 dark:text-white" data-categorie="jeu">Jeu C</button>
+                <button class="filtre-projet px-4 py-2 rounded-full bg-white dark:bg-gray-700 text-gray-700 dark:text-white" data-categorie="logiciel">Logiciel</button>
+                <button class="filtre-projet px-4 py-2 rounded-full bg-white dark:bg-gray-700 text-gray-700 dark:text-white" data-categorie="data">Data</button>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Site Web Football -->
+            <div class="project-card bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden" data-categorie="web">
+                <div class="h-48 bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
+                    <!--i class="fas fa-futbol text-5xl text-gray-500 dark:text-gray-400"></i-->
+                    <img src="footix2.PNG" alt="Graphique des Ventes" class="w-full h-full object-cover rounded-xl mt-4">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">Site Web Footix</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">Site sur l'historique des compétitions de football avec quiz interactifs.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">HTML</span>
+                        <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">CSS</span>
+                        <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">JavaScript</span>
+                        <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">PHP</span>
+                    </div>
+                    <a href="footix.html" class="text-primary hover:underline">Voir <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Gestion Comptes Bancaires -->
+            <div class="project-card bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden" data-categorie="logiciel">
+                <div class="h-48 bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
+                    <!--i class="fas fa-university text-5xl text-gray-500 dark:text-gray-400"></i-->
+                    <img src="connexion.PNG" alt="Graphique des Ventes" class="w-full h-full object-cover rounded-xl mt-4">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">Gestion Bancaire</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">Application GUI pour gérer des comptes et exporter en CSV.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Python</span>
+                        <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">PyQt5</span>
+                    </div>
+                    <a href="bankflow.html" class="text-primary hover:underline">Voir <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Tableau Ventes Excel -->
+            <div class="project-card bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden" data-categorie="data">
+                <div class="h-48 bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
+                    <!--i class="fas fa-chart-bar text-5xl text-gray-500 dark:text-gray-400"></i-->
+                    <img src="projet1.PNG" alt="Graphique des Ventes" class="w-full h-full object-cover rounded-xl mt-4">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">Tableau Ventes</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">Tableau Excel pour suivre les ventes par région.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Excel</span>
+                    </div>
+                    <a href="projet-data-1.html" class="text-primary hover:underline">Voir <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Analyse Performances Employés -->
+            <div class="project-card bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden" data-categorie="data">
+                <div class="h-48 bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
+                    <i class="fas fa-users text-5xl text-gray-500 dark:text-gray-400"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">Perf. Employés</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">Analyse des performances avec visualisations.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Python</span>
+                        <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Pandas</span>
+                    </div>
+                    <a href="projet-data-2.html" class="text-primary hover:underline">Voir <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Analyse Facteurs Ventes -->
+            <div class="project-card bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden" data-categorie="data">
+                <div class="h-48 bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
+                    <i class="fas fa-analytics text-5xl text-gray-500 dark:text-gray-400"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">Facteurs Ventes</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">Étude des leviers commerciaux.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Python</span>
+                    </div>
+                    <a href="#" class="text-primary hover:underline">Voir <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Tableau Commercial Power BI -->
+            <div class="project-card bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden" data-categorie="data">
+                <div class="h-48 bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
+                    <i class="fas fa-tachometer-alt text-5xl text-gray-500 dark:text-gray-400"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">Dashboard Commercial</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">Tableau interactif des performances.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Power BI</span>
+                    </div>
+                    <a href="#" class="text-primary hover:underline">Voir <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Reconnaissance Vocale -->
+            <div class="project-card bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden" data-categorie="logiciel">
+                <div class="h-48 bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
+                    <i class="fas fa-microphone text-5xl text-gray-500 dark:text-gray-400"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">Reco. Vocale(En cours)</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">Modèle ML pour identifier la langue parlée.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Python</span>
+                        <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">ML</span>
+                    </div>
+                    <a href="#" class="text-primary hover:underline">Voir <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Puissance 4 en C -->
+            <div class="project-card bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden" data-categorie="jeu">
+                <div class="h-48 bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
+                    <i class="fas fa-gamepad text-5xl text-gray-500 dark:text-gray-400"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">Puissance 4</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">Jeu en console avec gestion des règles.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">C</span>
+                    </div>
+                    <a href="#" class="text-primary hover:underline">Voir <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Section formation -->
+    <section id="formation" class="py-20 section-transition">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12"><span class="border-b-2 border-primary pb-2">Formation</span></h2>
+            
+            <div class="relative border-l-2 border-primary pl-8 ml-4 md:ml-0 md:mx-auto md:max-w-3xl">
+                <!-- Formation 1 -->
+                <div class="mb-12 relative">
+                    <div class="absolute -left-10 mt-1.5 h-6 w-6 rounded-full border-2 border-primary bg-white dark:bg-gray-900"></div>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                        <div class="flex flex-col md:flex-row justify-between mb-2">
+                            <h3 class="text-xl font-semibold text-primary">ENSIM - École Nationale Supérieure d'Ingénieurs du Mans</h3>
+                            <span class="text-gray-600 dark:text-gray-400">2024-</span>
+                        </div>
+                        <p class="text-lg mb-2">Diplôme d'Ingénieur en Informatique</p>
+                        <p class="text-gray-600 dark:text-gray-400">Spécialisation en informatique. Formation approfondie en algorithmique, programmation orientée objet, bases de données, intelligence artificielle, développement web et mobile.</p>
+                    </div>
+                </div>
+                
+                <!-- Formation 2 -->
+                <div class="mb-12 relative">
+                    <div class="absolute -left-10 mt-1.5 h-6 w-6 rounded-full border-2 border-primary bg-white dark:bg-gray-900"></div>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                        <div class="flex flex-col md:flex-row justify-between mb-2">
+                            <h3 class="text-xl font-semibold text-primary">Classe Préparatoire MPSI</h3>
+                            <span class="text-gray-600 dark:text-gray-400">2022-2024</span>
+                        </div>
+                        <p class="text-lg mb-2">Sup'prepa</p>
+                        <p class="text-gray-600 dark:text-gray-400">Formation généraliste incluant l'informatique, dont la programmation, les réseaux, les systèmes d'exploitation et les bases de données. Projets pratiques en développement logiciel.Egalement les probabilités&Statistiques</p>
+                    </div>
+                </div>
+                
+                <!-- Formation 3 -->
+                <div class="mb-0 relative">
+                    <div class="absolute -left-10 mt-1.5 h-6 w-6 rounded-full border-2 border-primary bg-white dark:bg-gray-900"></div>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                        <div class="flex flex-col md:flex-row justify-between mb-2">
+                            <h3 class="text-xl font-semibold text-primary">Baccalauréat Scientifique</h3>
+                            <span class="text-gray-600 dark:text-gray-400">2022</span>
+                        </div>
+                        <p class="text-lg mb-2">College Jean Tabi</p>
+                        <p class="text-gray-600 dark:text-gray-400">Baccalauréat Scientifique option mathématiques et Sciences de la vie et de la Terre. Mention Bien.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section contact -->
+    <section id="contact" class="py-20 bg-gray-50 dark:bg-gray-800 section-transition">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12"><span class="border-b-2 border-primary pb-2">Contact</span></h2>
+            
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2">
+                    <div class="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-6 h-full">
+                        <h3 class="text-xl font-semibold mb-6">Informations de contact</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="bg-primary bg-opacity-20 p-3 rounded-full mr-4">
+                                    <i class="fas fa-envelope text-primary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">Email</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">warrenshamir10@gmail.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-primary bg-opacity-20 p-3 rounded-full mr-4">
+                                    <i class="fas fa-map-marker-alt text-primary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">Adresse</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">16 boulevard Charles Nicolle, 72000 Le Mans, France</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-primary bg-opacity-20 p-3 rounded-full mr-4">
+                                    <i class="fas fa-phone text-primary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">Téléphone</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">+33 06 22 34 83 23</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h3 class="text-xl font-semibold mb-4">Réseaux sociaux</h3>
+                            <div class="flex space-x-4">
+                                <a href="https://www.linkedin.com/in/warren-shamir-582b5b348?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" class="bg-primary bg-opacity-20 p-3 rounded-full text-primary hover:bg-opacity-30 hover:scale-110 transition-all">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="https://github.com/Warren27026" target="_blank" class="bg-primary bg-opacity-20 p-3 rounded-full text-primary hover:bg-opacity-30 hover:scale-110 transition-all">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://x.com/warren2702?s=11" class="bg-primary bg-opacity-20 p-3 rounded-full text-primary hover:bg-opacity-30 hover:scale-110 transition-all">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <div class="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-6">
+                        <h3 class="text-xl font-semibold mb-6">Envoyez-moi un message</h3>
+                        
+                        <form id="contactForm">
+                            <div class="mb-4">
+                                <label for="nom" class="block text-sm font-medium mb-2">Nom</label>
+                                <input type="text" id="nom" name="nom" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-base" required>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="email" class="block text-sm font-medium mb-2">Email</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-base" required>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="sujet" class="block text-sm font-medium mb-2">Sujet</label>
+                                <input type="text" id="sujet" name="sujet" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-base">
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label for="message" class="block text-sm font-medium mb-2">Message</label>
+                                <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-base" required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full px-6 py-3 bg-primary text-white rounded-lg hover:bg-opacity-90 transition-colors">Envoyer</button>
+                        </form>
+                        
+                        <div id="formStatus" class="mt-4 text-center hidden"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 bg-gray-900 dark:bg-black text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold">MonPortfolio</h3>
+                    <p class="text-gray-400 mt-1">© 2024 Tous droits réservés.</p>
+                </div>
+                
+                <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8 items-center">
+                    <a href="#accueil" class="hover:text-primary transition-colors">Accueil</a>
+                    <a href="#apropos" class="hover:text-primary transition-colors">À propos</a>
+                    <a href="#competences" class="hover:text-primary transition-colors">Compétences</a>
+                    <a href="#projets" class="hover:text-primary transition-colors">Projets</a>
+                    <a href="#formation" class="hover:text-primary transition-colors">Formation</a>
+                    <a href="#contact" class="hover:text-primary transition-colors">Contact</a>
+                </div>
+                
+                <div class="mt-6 md:mt-0">
+                    <button id="scrollTop" class="px-4 py-2 bg-primary rounded-full hover:bg-opacity-90 transition-colors">
+                        <i class="fas fa-arrow-up"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Détection du mode sombre/clair
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+        
+        // Variables
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const modeToggle = document.getElementById('modeToggle');
+        const modeToggleMobile = document.getElementById('modeToggleMobile');
+        const scrollTopBtn = document.getElementById('scrollTop');
+        const menuItems = document.querySelectorAll('.menu-item');
+        const sections = document.querySelectorAll('section');
+        const filtresProjets = document.querySelectorAll('.filtre-projet');
+        const projets = document.querySelectorAll('.project-card');
+        const progressBars = document.querySelectorAll('.progress-bar');
+        const contactForm = document.getElementById('contactForm');
+        const formStatus = document.getElementById('formStatus');
+        
+        // Menu Mobile
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Mode Sombre/Clair
+        const toggleDarkMode = () => {
+            document.documentElement.classList.toggle('dark');
+        };
+        
+        modeToggle.addEventListener('click', toggleDarkMode);
+        modeToggleMobile.addEventListener('click', toggleDarkMode);
+        
+        // Scroll to Top
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Navigation Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // Fermer le menu mobile si ouvert
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 70,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Active menu en fonction du scroll
+        const setActiveMenu = () => {
+            let scrollPosition = window.scrollY + 100;
+            
+            sections.forEach(section => {
+                if (scrollPosition >= section.offsetTop && scrollPosition < (section.offsetTop + section.offsetHeight)) {
+                    const currentId = section.getAttribute('id');
+                    
+                    menuItems.forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('href') === `#${currentId}`) {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', setActiveMenu);
+        
+        // Animation des barres de compétences
+        const animateProgressBars = () => {
+            progressBars.forEach(bar => {
+                const parentElement = bar.parentElement;
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            bar.style.width = bar.style.width || "0%";
+                            observer.unobserve(parentElement);
+                        }
+                    });
+                });
+                
+                observer.observe(parentElement);
+            });
+        };
+        
+        animateProgressBars();
+        
+        // Filtrage des projets
+        filtresProjets.forEach(filtre => {
+            filtre.addEventListener('click', () => {
+                // Réinitialisation des styles de filtres
+                filtresProjets.forEach(f => {
+                    f.classList.remove('bg-primary', 'text-white');
+                    f.classList.add('bg-white', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-white');
+                });
+                
+                // Appliquer style au filtre sélectionné
+                filtre.classList.remove('bg-white', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-white');
+                filtre.classList.add('bg-primary', 'text-white');
+                
+                const categorie = filtre.getAttribute('data-categorie');
+                
+                projets.forEach(projet => {
+                    if (categorie === 'tous' || projet.getAttribute('data-categorie') === categorie) {
+                        projet.style.display = 'block';
+                        setTimeout(() => {
+                            projet.style.opacity = '1';
+                            projet.style.transform = 'translateY(0)';
+                        }, 50);
+                    } else {
+                        projet.style.opacity = '0';
+                        projet.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            projet.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+        
+        // Formulaire de contact
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Simulation d'envoi du formulaire
+            formStatus.classList.remove('hidden', 'text-red-500', 'text-green-500');
+            formStatus.classList.add('text-blue-500');
+            formStatus.textContent = "Envoi en cours...";
+            
+            // Simuler un délai d'envoi
+            setTimeout(() => {
+                formStatus.classList.remove('text-blue-500');
+                formStatus.classList.add('text-green-500');
+                formStatus.textContent = "Message envoyé avec succès!";
+                
+                // Réinitialiser le formulaire
+                contactForm.reset();
+            }, 1500);
+        });
+        
+        // Animation des éléments au défilement
+        const observerOptions = {
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.section-transition > div').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
