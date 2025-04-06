@@ -145,7 +145,9 @@
         }
     </style>
 </head>
+
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <!-- Navigation -->
     <nav class="fixed w-full bg-white dark:bg-gray-900 shadow-md z-50 transition-colors duration-300">
         <div class="container mx-auto px-4 py-3 flex items-center justify-between">
@@ -675,7 +677,7 @@
                         </div>
                     </div>
                 </div>
-                
+                <!--service ID:service_z3pdjtl-->
                 <div class="md:w-1/2">
                     <div class="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-6">
                         <h3 class="text-xl font-semibold mb-6">Envoyez-moi un message</h3>
@@ -916,6 +918,30 @@
         document.querySelectorAll('.section-transition > div').forEach(el => {
             observer.observe(el);
         });
+        
+    // Initialiser EmailJS avec votre Public Key
+    (function(){
+        emailjs.init("SZh3kyuMggMz_Ive6"); // Remplacez par votre Public Key
+    })();
+
+    // Gérer la soumission du formulaire
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Empêche le rechargement de la page
+
+        // Envoyer les données du formulaire via EmailJS
+        emailjs.sendForm('service_z3pdjtl', 'template_s1w8rsb', this)
+            .then(function(response) {
+                console.log('Succès!', response.status, response.text);
+                document.getElementById('formStatus').classList.remove('hidden');
+                document.getElementById('formStatus').innerText = 'Message envoyé avec succès !';
+                document.getElementById('contactForm').reset(); // Réinitialiser le formulaire
+            }, function(error) {
+                console.log('Erreur:', error);
+                document.getElementById('formStatus').classList.remove('hidden');
+                document.getElementById('formStatus').innerText = 'Erreur lors de l\'envoi. Réessayez.';
+            });
+    });
+
     </script>
 </body>
 </html>
