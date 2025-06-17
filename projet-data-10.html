@@ -92,7 +92,7 @@
         </div>
         <div id="mobileMenu" class="hidden bg-white dark:bg-gray-800 md:hidden w-full transition-all duration-300">
             <div class="container mx-auto px-4 py-2 flex flex-col">
-                <a href="/" class="py-3 border-b border-gray-200 dark:border-gray-700">Retour au Portfolio</a>
+                <a href="index.html" class="py-3 border-b border-gray-200 dark:border-gray-700">Retour au Portfolio</a>
             </div>
         </div>
     </nav>
@@ -101,16 +101,16 @@
     <section class="min-h-screen flex items-center justify-center pt-20 section-transition">
         <div class="container mx-auto px-4 py-20">
             <div class="max-w-4xl mx-auto">
-                <h1 class="text-4xl md:text-5xl font-bold mb-6 text-center text-primary animate-fade-in">Analyse des Performances des Employés</h1>
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 text-center text-primary animate-fade-in">Tableau de Bord des Ventes</h1>
                 <p class="text-lg text-gray-600 dark:text-gray-400 mb-12 text-center animate-fade-in" style="animation-delay: 0.2s;">
-                    Une exploration statistique des performances des employés avec Python.
+                  Construction d’un modèle de régression linéaire avec Python pour prédire les prix des maisons à l’aide du dataset Boston Housing.
                 </p>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Image ou Icône du Projet -->
                     <div class="animate-slide-left">
                         <div class="bg-gray-300 dark:bg-gray-600 h-64 rounded-xl flex items-center justify-center">
-                            <img src="employee-performance-screenshot.jpg" alt="Analyse des Performances" class="w-full h-full object-cover rounded-xl">
+                            <img src="kmeans_clusters_final.png" alt="Tableau de Bord des Ventes" class="w-full h-full object-cover rounded-xl">
                         </div>
                     </div>
 
@@ -119,22 +119,22 @@
                         <div class="project-detail bg-white dark:bg-gray-700 rounded-xl shadow-lg p-6">
                             <h2 class="text-2xl font-semibold mb-4 text-primary">Détails</h2>
                             <p class="text-gray-600 dark:text-gray-300 mb-4">
-                                Ce projet répond à la problématique d’une entreprise souhaitant analyser la répartition des performances des employés pour identifier les écarts et les outliers. À partir du <strong>HR Analytics Dataset</strong>, j’ai étudié les distributions des scores de performance et des heures travaillées avec Python. J’ai calculé des statistiques descriptives (moyenne, médiane, mode, quartiles, variance, écart-type) via <code>pandas</code>, visualisé les données avec des histogrammes, boxplots et diagrammes en barre via <code>matplotlib</code> et <code>seaborn</code>, et détecté les outliers avec la règle des 1.5 * IQR.
+                                Développement d’un modèle de régression linéaire avec scikit-learn pour prédire les prix des maisons en fonction de caractéristiques comme l’emplacement et la superficie. Les données ont été prétraitées avec pandas (nettoyage, ingénierie des features). Les performances du modèle ont été évaluées avec des métriques comme R², RMSE et MAPE, et les coefficients interprétés pour identifier les facteurs clés.
                             </p>
                             <div class="mb-4">
                                 <h3 class="text-lg font-medium mb-2">Technologies utilisées</h3>
                                 <div class="flex flex-wrap gap-2">
                                     <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Python</span>
                                     <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Pandas</span>
-                                    <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Matplotlib</span>
-                                    <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Seaborn</span>
+                                    <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Scikit-learn</span>
+                                    <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Matplotlib/Seaborn</span>
                                 </div>
                             </div>
                             <div class="mb-4">
                                 <h3 class="text-lg font-medium mb-2">Durée</h3>
-                                <p class="text-gray-600 dark:text-gray-300">3 semaines, réalisé en avril 2025</p>
+                                <p class="text-gray-600 dark:text-gray-300">5 jours avril 2025</p>
                             </div>
-                            <a href="https://github.com/Warren27026/Projet-data/tree/main/Projet_2_Analyse_Performances_Employe" target="_blank" class="inline-flex items-center text-primary hover:underline">
+                            <a href="https://github.com/Warren27026/Projet-data/tree/main/Projet10_Prediction_prix_maison" target="_blank" class="inline-flex items-center text-primary hover:underline">
                                 Voir le projet <i class="fas fa-arrow-right ml-2"></i>
                             </a>
                         </div>
@@ -145,9 +145,10 @@
                 <div class="mt-12 bg-white dark:bg-gray-700 rounded-xl shadow-lg p-6 animate-fade-in" style="animation-delay: 0.4s;">
                     <h2 class="text-2xl font-semibold mb-4 text-primary">Résultats et Impact</h2>
                     <p class="text-gray-600 dark:text-gray-300">
-                        Ce projet a permis d’identifier les employés exceptionnels et ceux nécessitant un soutien grâce à une analyse claire des distributions et des outliers. Les visualisations ont offert une compréhension rapide des écarts de performance, facilitant la prise de décision RH. J’ai acquis des compétences solides en statistiques descriptives, manipulation de données avec <code>pandas</code>, et visualisation avancée, renforçant ma capacité à transformer des données brutes en insights exploitables.
+                       Développement d’un modèle de régression linéaire avec scikit-learn pour prédire les prix des maisons en fonction de caractéristiques comme l’emplacement et la superficie. Les données ont été prétraitées avec pandas (nettoyage, ingénierie des features). Les performances du modèle ont été évaluées avec des métriques comme R², RMSE et MAPE, et les coefficients interprétés pour identifier les facteurs clés.
                     </p>
-                    <img src="employee-boxplot.jpg" alt="Boxplot des Performances" class="w-full h-full object-cover rounded-xl mt-4">
+                    <img src="prediction_maison.PNG" alt="Graphique des Ventes" class="w-full h-full object-cover rounded-xl mt-4">
+                    
                 </div>
             </div>
         </div>

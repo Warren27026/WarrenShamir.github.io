@@ -71,10 +71,10 @@
     <nav class="fixed w-full bg-white dark:bg-gray-900 shadow-md z-50 transition-colors duration-300">
         <div class="container mx-auto px-4 py-3 flex items-center justify-between">
             <div class="flex items-center">
-                <a href="/" class="text-xl font-bold text-primary">MonPortfolio</a>
+                <a href="index.html" class="text-xl font-bold text-primary">MonPortfolio</a>
             </div>
             <div class="hidden md:flex space-x-6 items-center">
-                <a href="/" class="menu-item py-2 hover:text-primary">Retour au Portfolio</a>
+                <a href="index.html" class="menu-item py-2 hover:text-primary">Retour au Portfolio</a>
                 <button id="modeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
                     <i class="fas fa-moon dark:hidden"></i>
                     <i class="fas fa-sun hidden dark:block"></i>
@@ -92,7 +92,7 @@
         </div>
         <div id="mobileMenu" class="hidden bg-white dark:bg-gray-800 md:hidden w-full transition-all duration-300">
             <div class="container mx-auto px-4 py-2 flex flex-col">
-                <a href="/" class="py-3 border-b border-gray-200 dark:border-gray-700">Retour au Portfolio</a>
+                <a href="index.html" class="py-3 border-b border-gray-200 dark:border-gray-700">Retour au Portfolio</a>
             </div>
         </div>
     </nav>
@@ -101,16 +101,16 @@
     <section class="min-h-screen flex items-center justify-center pt-20 section-transition">
         <div class="container mx-auto px-4 py-20">
             <div class="max-w-4xl mx-auto">
-                <h1 class="text-4xl md:text-5xl font-bold mb-6 text-center text-primary animate-fade-in">Analyse des Performances des Employés</h1>
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 text-center text-primary animate-fade-in">Identification de Langues contenu dans des audios</h1>
                 <p class="text-lg text-gray-600 dark:text-gray-400 mb-12 text-center animate-fade-in" style="animation-delay: 0.2s;">
-                    Une exploration statistique des performances des employés avec Python.
+                  Développement d’un modèle de classification pour identifier la langue parlée (anglais, français, arabe, japonais) dans des enregistrements audio.
                 </p>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Image ou Icône du Projet -->
                     <div class="animate-slide-left">
                         <div class="bg-gray-300 dark:bg-gray-600 h-64 rounded-xl flex items-center justify-center">
-                            <img src="employee-performance-screenshot.jpg" alt="Analyse des Performances" class="w-full h-full object-cover rounded-xl">
+                            <img src="presentation_IA.PNG" alt="Tableau de Bord des Ventes" class="w-full h-full object-cover rounded-xl">
                         </div>
                     </div>
 
@@ -119,22 +119,23 @@
                         <div class="project-detail bg-white dark:bg-gray-700 rounded-xl shadow-lg p-6">
                             <h2 class="text-2xl font-semibold mb-4 text-primary">Détails</h2>
                             <p class="text-gray-600 dark:text-gray-300 mb-4">
-                                Ce projet répond à la problématique d’une entreprise souhaitant analyser la répartition des performances des employés pour identifier les écarts et les outliers. À partir du <strong>HR Analytics Dataset</strong>, j’ai étudié les distributions des scores de performance et des heures travaillées avec Python. J’ai calculé des statistiques descriptives (moyenne, médiane, mode, quartiles, variance, écart-type) via <code>pandas</code>, visualisé les données avec des histogrammes, boxplots et diagrammes en barre via <code>matplotlib</code> et <code>seaborn</code>, et détecté les outliers avec la règle des 1.5 * IQR.
+                                Construction d’un système d’identification de langues (LID) à l’aide de méthodes d’apprentissage automatique pour classer des enregistrements audio de 5 à 6 secondes issus de conférences TEDx. Le projet a impliqué l’extraction de caractéristiques audio avec librosa, l’entraînement de modèles (GNB, SVM, Random Forest, MLP) avec optimisation des hyperparamètres, et l’utilisation d’un apprentissage par ensemble (vote majoritaire). Les performances ont été évaluées via des métriques comme l’accuracy pondérée, le F1-score et une matrice de confusion, avec une soumission des prédictions sur Kaggle.
                             </p>
                             <div class="mb-4">
                                 <h3 class="text-lg font-medium mb-2">Technologies utilisées</h3>
                                 <div class="flex flex-wrap gap-2">
                                     <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Python</span>
                                     <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Pandas</span>
-                                    <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Matplotlib</span>
-                                    <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Seaborn</span>
+                                    <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Librosa</span>
+                                    <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Scikit-learn(GNB, SVM, Random Forest, MLP)</span>
+                                    <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Matplotlib/Seaborn</span>
                                 </div>
                             </div>
                             <div class="mb-4">
                                 <h3 class="text-lg font-medium mb-2">Durée</h3>
-                                <p class="text-gray-600 dark:text-gray-300">3 semaines, réalisé en avril 2025</p>
+                                <p class="text-gray-600 dark:text-gray-300">1 mois Avril-Mai 2025</p>
                             </div>
-                            <a href="https://github.com/Warren27026/Projet-data/tree/main/Projet_2_Analyse_Performances_Employe" target="_blank" class="inline-flex items-center text-primary hover:underline">
+                            <a href="https://github.com/Warren27026/Projet-data/tree/main/TPIA" target="_blank" class="inline-flex items-center text-primary hover:underline">
                                 Voir le projet <i class="fas fa-arrow-right ml-2"></i>
                             </a>
                         </div>
@@ -145,9 +146,14 @@
                 <div class="mt-12 bg-white dark:bg-gray-700 rounded-xl shadow-lg p-6 animate-fade-in" style="animation-delay: 0.4s;">
                     <h2 class="text-2xl font-semibold mb-4 text-primary">Résultats et Impact</h2>
                     <p class="text-gray-600 dark:text-gray-300">
-                        Ce projet a permis d’identifier les employés exceptionnels et ceux nécessitant un soutien grâce à une analyse claire des distributions et des outliers. Les visualisations ont offert une compréhension rapide des écarts de performance, facilitant la prise de décision RH. J’ai acquis des compétences solides en statistiques descriptives, manipulation de données avec <code>pandas</code>, et visualisation avancée, renforçant ma capacité à transformer des données brutes en insights exploitables.
+                       Le modèle optimisé a atteint une accuracy significativement supérieure à un classificateur aléatoire (25 %), avec une performance notable sur Kaggle. L’analyse a révélé que les caractéristiques MFCC extraites via librosa étaient particulièrement efficaces, bien que l’arabe et le japonais présentaient des défis de généralisation. L’utilisation de l’apprentissage par ensemble a amélioré la robustesse des prédictions. Ce projet a renforcé mes compétences en traitement audio, apprentissage automatique et évaluation de modèles, avec des applications potentielles dans les assistants vocaux et les centres d’appels.
                     </p>
-                    <img src="employee-boxplot.jpg" alt="Boxplot des Performances" class="w-full h-full object-cover rounded-xl mt-4">
+                    <img src="score_kaggle.PNG" alt="Graphique des Ventes" class="w-full h-full object-cover rounded-xl mt-4">
+                    <img src="randomForest.PNG" alt="Graphique des Ventes" class="w-full h-full object-cover rounded-xl mt-4">
+                    <img src="svm.PNG" alt="Graphique des Ventes" class="w-full h-full object-cover rounded-xl mt-4">
+                    <img src="mlp.PNG" alt="Graphique des Ventes" class="w-full h-full object-cover rounded-xl mt-4">
+                    <img src="GNB.PNG" alt="Graphique des Ventes" class="w-full h-full object-cover rounded-xl mt-4">
+                    <img src="Dummy.PNG" alt="Graphique des Ventes" class="w-full h-full object-cover rounded-xl mt-4">
                 </div>
             </div>
         </div>
