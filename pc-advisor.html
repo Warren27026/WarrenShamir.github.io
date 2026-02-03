@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PC-ADVISOR – Portfolio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PC-ADVISOR – Recommandation d’ordinateur</title>
 
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -12,284 +13,244 @@
       theme: {
         extend: {
           colors: {
-            primary: '#5D5CDE',
-            secondary: '#383854',
-            accent: '#5D5CDE',
+            primary: '#0EA5E9',
+            darkbg: '#050816',
           }
         }
       }
     }
   </script>
 
+  <!-- Font Awesome -->
   <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <style>
     html { scroll-behavior: smooth; }
-
-    .section-transition { transition: all 0.5s ease; }
-
-    .project-detail { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .project-detail:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.10), 0 10px 10px -5px rgba(0,0,0,0.04);
+    .tag-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.28rem 0.7rem;
+      border-radius: 9999px;
+      font-size: 11px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: rgb(226, 232, 240);
     }
-    .dark .project-detail:hover {
-      box-shadow: 0 10px 25px -5px rgba(255,255,255,0.10), 0 10px 10px -5px rgba(255,255,255,0.04);
-    }
-
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes slideInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
-    @keyframes slideInRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
-
-    .animate-fade-in { animation: fadeIn 0.6s ease forwards; }
-    .animate-slide-left { animation: slideInLeft 0.8s ease forwards; }
-    .animate-slide-right { animation: slideInRight 0.8s ease forwards; }
   </style>
 </head>
 
-<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+<body class="bg-slate-950 text-slate-100">
 
-  <!-- NAV -->
-  <nav class="fixed top-0 inset-x-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur shadow-md z-50 transition-colors duration-300">
-    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+<!-- NAVBAR -->
+<header class="fixed top-0 inset-x-0 z-40 bg-slate-950/80 backdrop-blur border-b border-slate-800">
+  <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-emerald-400 flex items-center justify-center text-slate-950 font-bold text-lg">
+        W
+      </div>
+      <div class="leading-tight">
+        <p class="text-sm font-semibold">MonPortfolio</p>
+        <p class="text-[11px] text-slate-400">Retour au portfolio</p>
+      </div>
+    </a>
 
-      <a href="index.html" class="flex items-center gap-2">
-        <span class="text-xl font-bold text-primary">MonPortfolio</span>
-        <span class="hidden sm:inline text-xs text-gray-500 dark:text-gray-400">/ PC-ADVISOR</span>
+    <div class="flex items-center gap-3">
+      <a href="index.html#projets"
+         class="hidden sm:inline-flex items-center gap-2 text-xs px-3 py-1.5 rounded-full border border-slate-700 text-slate-200 hover:text-primary hover:border-primary transition-colors">
+        <i class="fa-solid fa-arrow-left"></i>
+        Tous les projets
       </a>
 
-      <!-- Desktop -->
-      <div class="hidden md:flex items-center gap-4">
-        <a href="index.html#projets"
-           class="text-sm px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary hover:text-primary transition-colors">
-          <i class="fas fa-arrow-left mr-2"></i>Retour aux projets
-        </a>
-
-        <button id="modeToggle"
-                class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                aria-label="Basculer le mode sombre">
-          <i class="fas fa-moon dark:hidden"></i>
-          <i class="fas fa-sun hidden dark:block"></i>
-        </button>
-      </div>
-
-      <!-- Mobile -->
-      <div class="md:hidden flex items-center gap-2">
-        <button id="modeToggleMobile"
-                class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                aria-label="Basculer le mode sombre">
-          <i class="fas fa-moon dark:hidden"></i>
-          <i class="fas fa-sun hidden dark:block"></i>
-        </button>
-
-        <button id="menuToggle"
-                class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                aria-label="Ouvrir le menu">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
+      <button id="themeToggle"
+              class="p-2 rounded-full border border-slate-700 hover:border-primary hover:text-primary transition-colors"
+              aria-label="Basculer le mode sombre">
+        <i class="fa-solid fa-moon hidden dark:inline"></i>
+        <i class="fa-regular fa-sun dark:hidden"></i>
+      </button>
     </div>
+  </div>
+</header>
 
-    <!-- Mobile Menu -->
-    <div id="mobileMenu" class="hidden bg-white dark:bg-gray-800 md:hidden border-t border-gray-200 dark:border-gray-700">
-      <div class="container mx-auto px-4 py-2 flex flex-col">
-        <a href="index.html#projets" class="py-3">← Retour aux projets</a>
-        <a href="index.html" class="py-3 border-t border-gray-200 dark:border-gray-700">Accueil</a>
-      </div>
-    </div>
-  </nav>
-
-  <main class="pt-24">
+<main class="pt-24 pb-16 px-4">
+  <div class="max-w-5xl mx-auto space-y-10">
 
     <!-- HERO -->
-    <section class="section-transition">
-      <div class="container mx-auto px-4 py-12">
-        <div class="max-w-4xl mx-auto">
+    <section class="space-y-4">
+      <p class="text-xs uppercase tracking-[0.25em] text-primary">
+        Projet web · Angular
+      </p>
 
-          <h1 class="text-4xl md:text-5xl font-bold mb-4 text-center text-primary animate-fade-in">
-            PC-ADVISOR
-          </h1>
+      <h1 class="text-3xl md:text-4xl font-semibold">
+        PC-ADVISOR –
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">
+          Recommandation d’ordinateur
+        </span>
+      </h1>
 
-          <p class="text-lg text-gray-600 dark:text-gray-400 mb-10 text-center animate-fade-in" style="animation-delay:0.2s;">
-            Application web Angular qui guide l’utilisateur vers un ordinateur adapté à ses besoins grâce à un parcours
-            <span class="text-primary font-medium">personnalisé</span> et
-            <span class="text-primary font-medium">éducatif</span>.
+      <p class="text-sm md:text-base text-slate-300 max-w-3xl">
+        Application web Angular permettant de recommander un ordinateur adapté aux besoins
+        de l’utilisateur (bureautique, gaming, montage, etc.) via des parcours personnalisés
+        et un module éducatif sur les composants.
+      </p>
+
+      <div class="flex flex-wrap gap-3 text-[11px] mt-3">
+        <span class="tag-pill"><i class="fa-brands fa-angular mr-1 text-primary"></i> Angular</span>
+        <span class="tag-pill"><i class="fa-solid fa-code mr-1 text-primary"></i> TypeScript</span>
+        <span class="tag-pill"><i class="fa-solid fa-database mr-1 text-primary"></i> JSON</span>
+        <span class="tag-pill"><i class="fa-solid fa-filter mr-1 text-primary"></i> Filtres dynamiques</span>
+        <span class="tag-pill"><i class="fa-solid fa-mobile-screen mr-1 text-primary"></i> Responsive</span>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <a href="https://pc-advisor.netlify.app/"
+           target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 text-xs px-3 py-2 rounded-full bg-primary text-slate-950 font-medium hover:opacity-90 transition-opacity">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          Voir le site
+        </a>
+
+        <a href="https://github.com/Warren27026/PC-Advisor"
+           target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 text-xs px-3 py-2 rounded-full border border-slate-700 text-slate-200 hover:text-primary hover:border-primary transition-colors">
+          <i class="fa-brands fa-github"></i>
+          Voir le code
+        </a>
+      </div>
+    </section>
+
+    <!-- CONTENU PRINCIPAL -->
+    <section class="grid md:grid-cols-[1.4fr,1.6fr] gap-8 items-start">
+
+      <!-- VISUEL -->
+      <div class="space-y-4">
+        <div class="relative rounded-2xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+          <img src="pc-advisor1.PNG" alt="PC-Advisor accueil"
+               class="w-full h-64 md:h-80 object-cover">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 text-[11px]">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/60 p-3">
+            <p class="text-slate-400 uppercase text-[10px] mb-1">Période</p>
+            <p class="font-medium">Mai – Juin 2025</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/60 p-3">
+            <p class="text-slate-400 uppercase text-[10px] mb-1">Type</p>
+            <p class="font-medium">Application Web</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- DESCRIPTION -->
+      <div class="space-y-6">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-5">
+          <h2 class="text-lg font-semibold mb-3">Description</h2>
+          <p class="text-sm text-slate-300 mb-3">
+            PC-ADVISOR propose <strong>trois parcours</strong> :
+            Débutants, Connaisseurs et Éducatif.
+            L’utilisateur indique ses besoins (usage, budget, performances)
+            et l’application fournit une recommandation adaptée.
           </p>
 
-          <!-- Badges -->
-          <div class="flex flex-wrap gap-2 justify-center mb-8 animate-fade-in" style="animation-delay:0.3s;">
-            <span class="text-xs px-3 py-1 rounded-full bg-primary bg-opacity-15 text-primary">Angular</span>
-            <span class="text-xs px-3 py-1 rounded-full bg-primary bg-opacity-15 text-primary">TypeScript</span>
-            <span class="text-xs px-3 py-1 rounded-full bg-primary bg-opacity-15 text-primary">JSON</span>
-            <span class="text-xs px-3 py-1 rounded-full bg-primary bg-opacity-15 text-primary">Responsive</span>
-            <span class="text-xs px-3 py-1 rounded-full bg-primary bg-opacity-15 text-primary">Recommandation</span>
+          <ul class="list-disc list-inside text-sm text-slate-300 space-y-1">
+            <li>Filtrage intelligent sur CPU, GPU, RAM, stockage et budget</li>
+            <li>Parcours éducatif expliquant les composants informatiques</li>
+            <li>Interface responsive pensée pour desktop et mobile</li>
+            <li>Données structurées via fichiers JSON</li>
+          </ul>
+        </div>
+
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-5">
+          <h3 class="text-sm font-semibold mb-2">Technologies utilisées</h3>
+          <div class="flex flex-wrap gap-2 text-[11px]">
+            <span class="tag-pill">Angular</span>
+            <span class="tag-pill">TypeScript</span>
+            <span class="tag-pill">HTML</span>
+            <span class="tag-pill">CSS</span>
+            <span class="tag-pill">JSON</span>
           </div>
-
-          <!-- CTA -->
-          <div class="flex flex-wrap gap-4 justify-center">
-            <a href="https://pc-advisor.netlify.app/"
-               target="_blank" rel="noopener noreferrer"
-               class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-opacity-90 transition-colors inline-flex items-center">
-              <i class="fas fa-arrow-up-right-from-square mr-2"></i>Voir le site
-            </a>
-
-            <a href="index.html#projets"
-               class="px-6 py-3 border border-primary text-primary rounded-lg hover:bg-primary hover:bg-opacity-10 transition-colors inline-flex items-center">
-              <i class="fas fa-arrow-left mr-2"></i>Retour
-            </a>
-          </div>
-
         </div>
       </div>
     </section>
 
-    <!-- DETAILS -->
-    <section class="section-transition pb-16">
-      <div class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+    <!-- FONCTIONNALITÉS -->
+    <section class="space-y-4">
+      <h2 class="text-lg md:text-xl font-semibold">Fonctionnalités clés</h2>
 
-          <!-- Preview -->
-          <div class="animate-slide-left">
-            <div class="bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
-              <img src="pc-advisor1.PNG"
-                   alt="Capture d'écran PC-ADVISOR"
-                   class="w-full h-72 object-cover">
-            </div>
-
-            <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
-              <div class="rounded-xl border border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-800">
-                <p class="text-xs text-gray-500 dark:text-gray-400">Durée</p>
-                <p class="font-semibold">Mai – Juin 2025</p>
-              </div>
-
-              <div class="rounded-xl border border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-800">
-                <p class="text-xs text-gray-500 dark:text-gray-400">Type</p>
-                <p class="font-semibold">Application Web</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card description -->
-          <div class="animate-slide-right">
-            <div class="project-detail bg-white dark:bg-gray-700 rounded-2xl shadow-lg p-6 border border-gray-100 dark:border-gray-600">
-              <h2 class="text-2xl font-semibold mb-4 text-primary">Description</h2>
-
-              <p class="text-gray-700 dark:text-gray-200 mb-4 leading-relaxed">
-                <strong>PC-ADVISOR</strong> est une application Angular qui propose
-                <strong>3 parcours</strong> (Débutants, Connaisseurs, Éducatif) pour aider à choisir un ordinateur
-                selon l’usage (bureautique, gaming, montage, etc.) et des contraintes (budget, CPU, GPU, RAM, stockage).
-              </p>
-
-              <ul class="list-disc list-inside text-gray-700 dark:text-gray-200 space-y-1 mb-5">
-                <li>Recommandation via filtres dynamiques</li>
-                <li>Parcours éducatif pour comprendre les composants</li>
-                <li>Interface responsive</li>
-                <li>Données gérées via fichiers JSON</li>
-              </ul>
-
-              <h3 class="text-lg font-medium mb-2">Technologies</h3>
-              <div class="flex flex-wrap gap-2 mb-5">
-                <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">Angular</span>
-                <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">TypeScript</span>
-                <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">HTML</span>
-                <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">CSS</span>
-                <span class="text-xs px-2 py-1 bg-primary bg-opacity-20 text-primary rounded">JSON</span>
-              </div>
-
-              <a href="https://pc-advisor.netlify.app/"
-                 target="_blank" rel="noopener noreferrer"
-                 class="inline-flex items-center text-primary hover:underline">
-                Voir le projet <i class="fas fa-arrow-right ml-2"></i>
-              </a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- IMPACT + GALLERY -->
-    <section class="section-transition pb-20">
-      <div class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-6 animate-fade-in">
-
-          <h2 class="text-2xl font-semibold mb-4 text-primary">Résultats & Impact</h2>
-
-          <p class="text-gray-700 dark:text-gray-200 leading-relaxed mb-6">
-            PC-ADVISOR propose une expérience utilisateur fluide et des recommandations adaptées à différents profils.
-            Le parcours éducatif améliore la compréhension des composants (CPU, GPU, RAM...), tandis que les parcours
-            Débutants et Connaisseurs accélèrent la prise de décision.
-            Ce projet a renforcé mes compétences en <strong>Angular</strong>, en conception d’UI,
-            et en <strong>gestion de données structurées</strong> (JSON + logique de filtrage).
+      <div class="grid md:grid-cols-3 gap-4 text-sm">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-4">
+          <i class="fa-solid fa-route text-primary mb-2"></i>
+          <h3 class="font-medium mb-1">Parcours personnalisés</h3>
+          <p class="text-xs text-slate-300">
+            Trois parcours adaptés au niveau de connaissance de l’utilisateur.
           </p>
+        </div>
 
-          <h3 class="text-lg font-medium mb-3">Aperçus</h3>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-4">
+          <i class="fa-solid fa-filter text-primary mb-2"></i>
+          <h3 class="font-medium mb-1">Recommandation</h3>
+          <p class="text-xs text-slate-300">
+            Système de filtres dynamiques pour des suggestions pertinentes.
+          </p>
+        </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <figure class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
-              <img src="pc-advisor2.PNG" alt="Parcours éducatif" class="w-full h-52 object-cover">
-              <figcaption class="p-3 text-xs text-gray-600 dark:text-gray-400">Parcours éducatif</figcaption>
-            </figure>
-
-            <figure class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
-              <img src="pc-advisor3.PNG" alt="Système de recommandation" class="w-full h-52 object-cover">
-              <figcaption class="p-3 text-xs text-gray-600 dark:text-gray-400">Recommandation / filtres</figcaption>
-            </figure>
-
-            <figure class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
-              <img src="pc-advisor4.PNG" alt="Interface responsive" class="w-full h-52 object-cover">
-              <figcaption class="p-3 text-xs text-gray-600 dark:text-gray-400">Interface responsive</figcaption>
-            </figure>
-
-            <figure class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
-              <img src="pc-advisor1.PNG" alt="Écran d’accueil PC-ADVISOR" class="w-full h-52 object-cover">
-              <figcaption class="p-3 text-xs text-gray-600 dark:text-gray-400">Accueil / navigation</figcaption>
-            </figure>
-          </div>
-
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-4">
+          <i class="fa-solid fa-chalkboard-user text-primary mb-2"></i>
+          <h3 class="font-medium mb-1">Module éducatif</h3>
+          <p class="text-xs text-slate-300">
+            Explication claire des composants informatiques.
+          </p>
         </div>
       </div>
     </section>
 
-  </main>
+    <!-- GALERIE -->
+    <section class="space-y-4">
+      <h2 class="text-lg md:text-xl font-semibold">Galerie</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <img src="pc-advisor2.PNG" class="rounded-xl border border-slate-800" alt="">
+        <img src="pc-advisor3.PNG" class="rounded-xl border border-slate-800" alt="">
+        <img src="pc-advisor4.PNG" class="rounded-xl border border-slate-800" alt="">
+      </div>
+    </section>
 
-  <!-- Footer -->
-  <footer class="py-10 bg-gray-900 dark:bg-black text-white">
-    <div class="container mx-auto px-4 text-center">
-      <p class="text-gray-400">© 2025 MonPortfolio. Tous droits réservés.</p>
-    </div>
-  </footer>
+    <!-- APPORT -->
+    <section class="space-y-3">
+      <h2 class="text-lg md:text-xl font-semibold">Ce que ce projet m’a apporté</h2>
+      <ul class="list-disc list-inside text-sm text-slate-300 space-y-1">
+        <li>Développement d’une application Angular complète</li>
+        <li>Gestion de données structurées (JSON)</li>
+        <li>Conception UX orientée utilisateur</li>
+        <li>Renforcement des compétences TypeScript</li>
+      </ul>
+    </section>
 
-  <script>
-    // Theme: préférence + mémorisation
-    const root = document.documentElement;
-    const storedTheme = localStorage.getItem('theme');
+  </div>
+</main>
 
-    if (storedTheme) {
-      root.classList.toggle('dark', storedTheme === 'dark');
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      root.classList.add('dark');
-    }
+<footer class="border-t border-slate-800 bg-slate-950 py-6 text-xs text-slate-500">
+  <div class="max-w-5xl mx-auto px-4 flex justify-between">
+    <p>© 2025 · MonPortfolio – PC-ADVISOR</p>
+    <a href="index.html#projets" class="hover:text-primary">Retour aux projets</a>
+  </div>
+</footer>
 
-    // Mobile Menu
-    const menuToggle = document.getElementById('menuToggle');
-    const mobileMenu = document.getElementById('mobileMenu');
-    if (menuToggle && mobileMenu) {
-      menuToggle.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-    }
+<script>
+  const root = document.documentElement;
+  const toggle = document.getElementById('themeToggle');
+  const saved = localStorage.getItem('theme');
 
-    // Toggle dark mode
-    const toggleDarkMode = () => {
-      root.classList.toggle('dark');
-      localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
-    };
+  if (saved) {
+    root.classList.toggle('dark', saved === 'dark');
+  } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    root.classList.add('dark');
+  }
 
-    const modeToggle = document.getElementById('modeToggle');
-    const modeToggleMobile = document.getElementById('modeToggleMobile');
+  toggle.addEventListener('click', () => {
+    root.classList.toggle('dark');
+    localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
+  });
+</script>
 
-    if (modeToggle) modeToggle.addEventListener('click', toggleDarkMode);
-    if (modeToggleMobile) modeToggleMobile.addEventListener('click', toggleDarkMode);
-  </script>
 </body>
 </html>
