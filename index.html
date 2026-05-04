@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio – Warren Betchem</title>
+  <title>Portfolio – Warren Shamir Betchem</title>
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -178,8 +178,8 @@
             </div>
 
             <div class="mt-6 flex items-center justify-between text-xs text-slate-400">
-              <span><i class="fa-brands fa-github mr-1"></i> github.com/Warren27026</span>
-              <span><i class="fa-brands fa-linkedin mr-1"></i> LinkedIn</span>
+              <a href="https://github.com/Warren27026" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors"><i class="fa-brands fa-github mr-1"></i>GitHub</a>
+              <a href="https://www.linkedin.com/in/warren-shamir-582b5b348" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors"><i class="fa-brands fa-linkedin mr-1"></i>LinkedIn</a>
             </div>
           </div>
         </div>
@@ -378,6 +378,16 @@
             <button class="project-filter px-3 py-1.5 rounded-full border border-slate-700 text-slate-300" data-category="web">Web</button>
             <button class="project-filter px-3 py-1.5 rounded-full border border-slate-700 text-slate-300" data-category="logiciel">Logiciel</button>
             <button class="project-filter px-3 py-1.5 rounded-full border border-slate-700 text-slate-300" data-category="jeu">Jeu</button>
+          </div>
+          <div class="md:hidden w-full mt-3">
+            <label for="projectCategory" class="sr-only">Filtrer les projets</label>
+            <select id="projectCategory" class="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+              <option value="all">Tous les projets</option>
+              <option value="data">Data / IA</option>
+              <option value="web">Web</option>
+              <option value="logiciel">Logiciel</option>
+              <option value="jeu">Jeu</option>
+            </select>
           </div>
         </div>
 
@@ -772,7 +782,8 @@
 
           <!-- Formulaire -->
           <div class="border border-slate-800 rounded-2xl bg-slate-900/40 p-6">
-            <h3 class="font-semibold mb-4">Envoyez-moi un message</h3>
+            <h3 class="font-semibold mb-2">Envoyez-moi un message</h3>
+            <p class="text-xs text-slate-400 mb-4">Le bouton ouvre votre application mail avec le message pré-rempli.</p>
             <form id="contactForm" class="space-y-4 text-sm">
               <div>
                 <label for="nom" class="block text-xs mb-1 text-slate-300">Nom</label>
@@ -797,7 +808,7 @@
               <button type="submit"
                       class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-gradient-to-r from-primary to-emerald-400 text-slate-950 text-sm font-medium hover:opacity-90 transition-opacity">
                 <i class="fa-regular fa-paper-plane"></i>
-                Envoyer
+                Préparer l’email
               </button>
               <p id="formStatus" class="text-xs mt-2 hidden"></p>
             </form>
@@ -890,6 +901,14 @@
     // Filtre projets
     const projectFilters = document.querySelectorAll('.project-filter');
     const projectCards = document.querySelectorAll('.project-card');
+    const projectCategory = document.getElementById('projectCategory');
+
+    const filterProjects = (category) => {
+      projectCards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        card.classList.toggle('hidden', !(category === 'all' || cardCategory === category));
+      });
+    };
 
     projectFilters.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -903,16 +922,15 @@
         btn.classList.remove('border-slate-700', 'text-slate-300');
         btn.classList.add('bg-primary/20', 'text-primary', 'border-primary/30');
 
-        projectCards.forEach(card => {
-          const cardCategory = card.getAttribute('data-category');
-          if (category === 'all' || cardCategory === category) {
-            card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
-          }
-        });
+        filterProjects(category);
       });
     });
+
+    if (projectCategory) {
+      projectCategory.addEventListener('change', (e) => {
+        filterProjects(e.target.value);
+      });
+    }
 
     // Formulaire contact (simulation)
     const contactForm = document.getElementById('contactForm');
@@ -920,17 +938,36 @@
 
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      formStatus.classList.remove('hidden');
-      formStatus.classList.remove('text-red-400', 'text-green-400');
+
+      const nom = document.getElementById('nom').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const sujet = document.getElementById('sujet').value.trim() || 'Contact depuis le portfolio';
+      const message = document.getElementById('message').value.trim();
+
+      if (!nom || !email || !message) {
+        formStatus.classList.remove('hidden', 'text-green-400', 'text-sky-400');
+        formStatus.classList.add('text-red-400');
+        formStatus.textContent = 'Merci de remplir les champs obligatoires avant l’envoi.';
+        return;
+      }
+
+      const contenu = `Nom : ${nom}
+Email : ${email}
+
+${message}`;
+      const mailtoLink = `mailto:warrenshamir10@gmail.com?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(contenu)}`;
+
+      formStatus.classList.remove('hidden', 'text-red-400');
       formStatus.classList.add('text-sky-400');
-      formStatus.textContent = 'Envoi en cours...';
+      formStatus.textContent = 'Ouverture de votre application mail...';
+
+      window.location.href = mailtoLink;
 
       setTimeout(() => {
         formStatus.classList.remove('text-sky-400');
         formStatus.classList.add('text-green-400');
-        formStatus.textContent = 'Message envoyé avec succès (simulation côté front) !';
-        contactForm.reset();
-      }, 1200);
+        formStatus.textContent = 'Si rien ne s’ouvre, copiez mon email : warrenshamir10@gmail.com';
+      }, 700);
     });
   </script>
 </body>
