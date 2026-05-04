@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio – Warren Betchem</title>
+  <title>Portfolio – Warren Shamir Betchem</title>
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -178,8 +178,8 @@
             </div>
 
             <div class="mt-6 flex items-center justify-between text-xs text-slate-400">
-              <span><i class="fa-brands fa-github mr-1"></i> github.com/Warren27026</span>
-              <span><i class="fa-brands fa-linkedin mr-1"></i> LinkedIn</span>
+              <a href="https://github.com/Warren27026" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors"><i class="fa-brands fa-github mr-1"></i>GitHub</a>
+              <a href="https://www.linkedin.com/in/warren-shamir-582b5b348" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors"><i class="fa-brands fa-linkedin mr-1"></i>LinkedIn</a>
             </div>
           </div>
         </div>
@@ -378,6 +378,16 @@
             <button class="project-filter px-3 py-1.5 rounded-full border border-slate-700 text-slate-300" data-category="web">Web</button>
             <button class="project-filter px-3 py-1.5 rounded-full border border-slate-700 text-slate-300" data-category="logiciel">Logiciel</button>
             <button class="project-filter px-3 py-1.5 rounded-full border border-slate-700 text-slate-300" data-category="jeu">Jeu</button>
+          </div>
+          <div class="md:hidden w-full mt-3">
+            <label for="projectCategory" class="sr-only">Filtrer les projets</label>
+            <select id="projectCategory" class="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+              <option value="all">Tous les projets</option>
+              <option value="data">Data / IA</option>
+              <option value="web">Web</option>
+              <option value="logiciel">Logiciel</option>
+              <option value="jeu">Jeu</option>
+            </select>
           </div>
         </div>
 
@@ -890,6 +900,14 @@
     // Filtre projets
     const projectFilters = document.querySelectorAll('.project-filter');
     const projectCards = document.querySelectorAll('.project-card');
+    const projectCategory = document.getElementById('projectCategory');
+
+    const filterProjects = (category) => {
+      projectCards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        card.classList.toggle('hidden', !(category === 'all' || cardCategory === category));
+      });
+    };
 
     projectFilters.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -903,16 +921,15 @@
         btn.classList.remove('border-slate-700', 'text-slate-300');
         btn.classList.add('bg-primary/20', 'text-primary', 'border-primary/30');
 
-        projectCards.forEach(card => {
-          const cardCategory = card.getAttribute('data-category');
-          if (category === 'all' || cardCategory === category) {
-            card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
-          }
-        });
+        filterProjects(category);
       });
     });
+
+    if (projectCategory) {
+      projectCategory.addEventListener('change', (e) => {
+        filterProjects(e.target.value);
+      });
+    }
 
     // Formulaire contact (simulation)
     const contactForm = document.getElementById('contactForm');
