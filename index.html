@@ -782,7 +782,8 @@
 
           <!-- Formulaire -->
           <div class="border border-slate-800 rounded-2xl bg-slate-900/40 p-6">
-            <h3 class="font-semibold mb-4">Envoyez-moi un message</h3>
+            <h3 class="font-semibold mb-2">Envoyez-moi un message</h3>
+            <p class="text-xs text-slate-400 mb-4">Le bouton ouvre votre application mail avec le message pré-rempli.</p>
             <form id="contactForm" class="space-y-4 text-sm">
               <div>
                 <label for="nom" class="block text-xs mb-1 text-slate-300">Nom</label>
@@ -807,7 +808,7 @@
               <button type="submit"
                       class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-gradient-to-r from-primary to-emerald-400 text-slate-950 text-sm font-medium hover:opacity-90 transition-opacity">
                 <i class="fa-regular fa-paper-plane"></i>
-                Envoyer
+                Préparer l’email
               </button>
               <p id="formStatus" class="text-xs mt-2 hidden"></p>
             </form>
@@ -937,17 +938,36 @@
 
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      formStatus.classList.remove('hidden');
-      formStatus.classList.remove('text-red-400', 'text-green-400');
+
+      const nom = document.getElementById('nom').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const sujet = document.getElementById('sujet').value.trim() || 'Contact depuis le portfolio';
+      const message = document.getElementById('message').value.trim();
+
+      if (!nom || !email || !message) {
+        formStatus.classList.remove('hidden', 'text-green-400', 'text-sky-400');
+        formStatus.classList.add('text-red-400');
+        formStatus.textContent = 'Merci de remplir les champs obligatoires avant l’envoi.';
+        return;
+      }
+
+      const contenu = `Nom : ${nom}
+Email : ${email}
+
+${message}`;
+      const mailtoLink = `mailto:warrenshamir10@gmail.com?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(contenu)}`;
+
+      formStatus.classList.remove('hidden', 'text-red-400');
       formStatus.classList.add('text-sky-400');
-      formStatus.textContent = 'Envoi en cours...';
+      formStatus.textContent = 'Ouverture de votre application mail...';
+
+      window.location.href = mailtoLink;
 
       setTimeout(() => {
         formStatus.classList.remove('text-sky-400');
         formStatus.classList.add('text-green-400');
-        formStatus.textContent = 'Message envoyé avec succès (simulation côté front) !';
-        contactForm.reset();
-      }, 1200);
+        formStatus.textContent = 'Si rien ne s’ouvre, copiez mon email : warrenshamir10@gmail.com';
+      }, 700);
     });
   </script>
 </body>
